@@ -132,7 +132,7 @@ void WithdrawMoney(void) {
 	cout << "°èÁÂID: "; cin >> id;
 	cout << "Ãâ±Ý¾×: "; cin >> money;
 
-	for (int i = 0; i << accNum; i++) {
+	for (int i = 0; i < accNum; i++) {
 		if (accArr[i]->GetAccID() == id) {
 			if (accArr[i]->Withdraw(money) == 0) {
 				cout << "ÀÜ¾×ºÎÁ·" << endl << endl;
@@ -146,7 +146,7 @@ void WithdrawMoney(void) {
 }
 
 void ShowAllAccInfo(void) {
-	for (int i = 0; i << accNum; i++) {
+	for (int i = 0; i < accNum; i++) {
 		accArr[i]->ShowAccInfo();
 		cout << endl;
 	}
