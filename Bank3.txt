@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <cstring>
+#include iostream
+#include cstring
 using namespace std;
 const int NAME_LEN = 20;
 
@@ -9,13 +9,13 @@ enum { Level_A = 7, Level_B = 4, Level_C = 2};
 enum { NORMAL = 1,CREDIT=2 };
 
 class Account {
-private:
+private
 	int accID;
 	int balance;
-	char* cusName;
+	char cusName;
 
-public:
-	Account(int ID, int money, char*name);
+public
+	Account(int ID, int money, charname);
 	Account(const Account & ref);
 	int GetAccID() const;
 	void Deposit(int money);
@@ -24,154 +24,197 @@ public:
 	~Account();
 };
 
-Account::Account(int ID, int money, char*name) :accID(ID), balance(money) {
+AccountAccount(int ID, int money, charname) accID(ID), balance(money) {
 	cusName = new char[strlen(name) + 1];
 	strcpy(cusName, name);
 }
 
-Account::Account(const Account & ref)
-	: accID(ref.accID), balance(ref.balance) {
+AccountAccount(const Account & ref)
+	 accID(ref.accID), balance(ref.balance) {
 	cusName = new char[strlen(ref.cusName) + 1];
 	strcpy(cusName, ref.cusName);
 }
-int Account::GetAccID() const { return accID; }
+int AccountGetAccID() const { return accID; }
 
-void Account::Deposit(int money) {
+void AccountDeposit(int money) {
 	balance += money;
 }
 
-int Account::Withdraw(int money) {
-	if (balance < money)
+int AccountWithdraw(int money) {
+	if (balance  money)
 		return 0;
 	balance -= money;
 	return money;
 }
 
-void Account::ShowAccInfo() const {
-	cout << "계좌ID: " << accID << endl;
-	cout << "이 름: " << cusName << endl;
-	cout << "잔 액: " << balance << endl;
+void AccountShowAccInfo() const {
+	cout  계좌ID   accID  endl;
+	cout  이 름   cusName  endl;
+	cout  잔 액   balance  endl;
 }
 
-Account::~Account() {
+Account~Account() {
 	delete[]cusName;
 }
 
-class NormalAccount : public Account {
-private:
+class NormalAccount  public Account {
+private
 	int interRate;
-public:
-	NormalAccount(int ID, int money, char*name, int rate) :Account(ID, money, name), interRate(rate) {}
+public
+	NormalAccount(int ID, int money, charname, int rate) Account(ID, money, name), interRate(rate) {}
 	virtual void Deposit(int money) {
-		Account::Deposit(money);
-		Account::Deposit(money*(interRate / 100.0));
+		AccountDeposit(money);
+		AccountDeposit(money(interRate  100.0));
 	}
 };
 
-class HighCrediAccount :public NormalAccount
+class HighCrediAccount public NormalAccount
 {
-private:
+private
 	int specialRate;
 
-public:
-	HighCrediAccount(int ID, int money, char*name, int rate, int special) :NormalAccount(ID, money, name, rate), specialRate(special) {}
+public
+	HighCrediAccount(int ID, int money, charname, int rate, int special) NormalAccount(ID, money, name, rate), specialRate(special) {}
 	virtual void Deposit(int money) {
-		NormalAccount::Deposit(money);
-		Account::Deposit(money*(specialRate / 100.0));
+		NormalAccountDeposit(money);
+		AccountDeposit(money(specialRate  100.0));
 	}
 
 };
 
 
 class AccountHandler {
-private:
-	Account *accArr[100];
+private
+	Account accArr[100];
 	int accNum;
-protected:
-	void MakeNormalAccount(void);  // 구현부분 만들기
-	void MakeCreditAccount(void);  // 구현부분 만들기
-public:
+protected
+	void MakeNormalAccount(void);  
+	void MakeCreditAccount(void); 
+public
 	AccountHandler();
 	void ShowMenu(void) const;
-	void MakeAccount(void);        // 수정 필요
+	void MakeAccount(void);       
 	void DepositMoney(void);
 	void WithdrawMoney(void);
 	void ShowAllAccInfo(void);
 	~AccountHandler();
 };
 
-AccountHandler::AccountHandler() :accNum(0) {
+AccountHandlerAccountHandler() accNum(0) {
 }
 
-void AccountHandler::ShowMenu(void) const{
-	cout << "----Menu----" << endl;
-	cout << "1. 계좌개설" << endl;
-	cout << "2. 입 금" << endl;
-	cout << "3. 출 금" << endl;
-	cout << "4. 계좌정보 전체 출력" << endl;
-	cout << "5. 프로그램 종료" << endl;
+void AccountHandlerShowMenu(void) const{
+	cout  ----Menu----  endl;
+	cout  1. 계좌개설  endl;
+	cout  2. 입 금  endl;
+	cout  3. 출 금  endl;
+	cout  4. 계좌정보 전체 출력  endl;
+	cout  5. 프로그램 종료  endl;
 }
 
-void AccountHandler::MakeAccount(void) {
+void AccountHandlerMakeAccount(void) {
+	int sel;
+
+	cout  [계좌개설]  endl;
+	cout  1. 보통계좌;
+	cout  2. 신용계좌  endl;
+	cout  선택 ;
+	cin  sel;
+	
+	if (sel == NORMAL)
+		MakeNormalAccount();
+	else
+		MakeCreditAccount();
+}
+
+void AccountHandlerMakeNormalAccount(void) {
 	int id;
 	char name[NAME_LEN];
 	int balance;
+	int interRate;
 
-	cout << "[계좌개설]" << endl;
-	cout << "계좌ID: "; cin >> id;
-	cout << "이 름: "; cin >> name;
-	cout << "입금액: "; cin >> balance;
-	cout << endl;
+	cout  [보통계좌 개설]  endl;
+	cout  계좌 ID ; cin  id;
+	cout  이 름 ; cin  name;
+	cout  입금액 ; cin  balance;
+	cout  이자율; cin  interRate;
+	cout  endl;
 
-	accArr[accNum++] = new Account(id, balance, name);
+	accArr[accNum++] = new NormalAccount(id, balance, name, interRate);
 }
 
-void AccountHandler::DepositMoney(void) {
+void AccountHandlerMakeCreditAccount(void) {
+	int id;
+	char name[NAME_LEN];
+	int balance;
+	int interRate;
+	int creditLevel;
+
+	cout  [신용계좌 개설]  endl;
+	cout  계좌 ID ; cin  id;
+	cout  이 름 ; cin  name;
+	cout  입금액 ; cin  balance;
+	cout  이자율; cin  interRate;
+	cout  신용등급(1toA, 2toB, 3toc) ; cin  creditLevel;
+	cout  endl;
+
+	switch (creditLevel)
+	{
+	case 1
+		accArr[accNum++] = new HighCrediAccount(id, balance, name, interRate, Level_A);
+	case2
+		accArr[accNum++] = new HighCrediAccount(id, balance, name, interRate, Level_B);
+	case3
+		accArr[accNum++] = new HighCrediAccount(id, balance, name, interRate, Level_C);
+	}
+}
+
+void AccountHandlerDepositMoney(void) {
 	int money;
 	int id;
-	cout << "[입  금]" << endl;
-	cout << "계좌ID: "; cin >> id;
-	cout << "입금액: "; cin >> money;
+	cout  [입  금]  endl;
+	cout  계좌ID ; cin  id;
+	cout  입금액 ; cin  money;
 
-	for (int i = 0; i < accNum; i++) {
-		if (accArr[i]->GetAccID() == id) {
-			accArr[i]->Deposit(money);
-			cout << "입금완료" << endl << endl;
+	for (int i = 0; i  accNum; i++) {
+		if (accArr[i]-GetAccID() == id) {
+			accArr[i]-Deposit(money);
+			cout  입금완료  endl  endl;
 			return;
 		}
 	}
-	cout << "유효하지 않은 ID 입니다." << endl << endl;
+	cout  유효하지 않은 ID 입니다.  endl  endl;
 }
 
-void AccountHandler::WithdrawMoney(void) {
+void AccountHandlerWithdrawMoney(void) {
 	int money;
 	int id;
-	cout << "[출  금]" << endl;
-	cout << "계좌ID: "; cin >> id;
-	cout << "출금액: "; cin >> money;
+	cout  [출  금]  endl;
+	cout  계좌ID ; cin  id;
+	cout  출금액 ; cin  money;
 
-	for (int i = 0; i < accNum; i++) {
-		if (accArr[i]->GetAccID() == id) {
-			if (accArr[i]->Withdraw(money) == 0) {
-				cout << "잔액부족" << endl << endl;
+	for (int i = 0; i  accNum; i++) {
+		if (accArr[i]-GetAccID() == id) {
+			if (accArr[i]-Withdraw(money) == 0) {
+				cout  잔액부족  endl  endl;
 				return;
 			}
-			cout << "출금완료" << endl << endl;
+			cout  출금완료  endl  endl;
 			return;
 		}
 	}
-	cout << "유효하지 않은 ID 입니다." << endl << endl;
+	cout  유효하지 않은 ID 입니다.  endl  endl;
 }
 
-void AccountHandler::ShowAllAccInfo(void) {
-	for (int i = 0; i < accNum; i++) {
-		accArr[i]->ShowAccInfo();
-		cout << endl;
+void AccountHandlerShowAllAccInfo(void) {
+	for (int i = 0; i  accNum; i++) {
+		accArr[i]-ShowAccInfo();
+		cout  endl;
 	}
 }
 
-AccountHandler::~AccountHandler() {
-	for (int i = 0; i << accNum; i++) {
+AccountHandler~AccountHandler() {
+	for (int i = 0; i  accNum; i++) {
 		delete accArr[i];
 	}
 }
@@ -182,28 +225,28 @@ int main() {
 
 	while (1) {
 		manager.ShowMenu();
-		cout << "선택: ";
-		cin >> choice;
-		cout << endl;
+		cout  선택 ;
+		cin  choice;
+		cout  endl;
 
 		switch (choice)
 		{
-		case MAKE:
+		case MAKE
 			manager.MakeAccount();
 			break;
-		case DEPOSIT:
+		case DEPOSIT
 			manager.DepositMoney();
 			break;
-		case WITHDRAW:
+		case WITHDRAW
 			manager.WithdrawMoney();
 			break;
-		case INQUIRE:
+		case INQUIRE
 			manager.ShowAllAccInfo();
 			break;
-		case EXIT:
+		case EXIT
 			return 0;
-		default:
-			cout << "Illegal selection" << endl;
+		default
+			cout  Illegal selection  endl;
 		}
 	}
 	return 0;
