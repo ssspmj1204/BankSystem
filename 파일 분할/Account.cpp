@@ -13,6 +13,16 @@ Account::Account(const Account & ref)
 }
 int Account::GetAccID() const { return accID; }
 
+Account& Account::operator=(const Account&ref) {
+	accID = ref.accID;
+	balance = ref.balance;
+
+	delete[]cusName;
+	cusName = new char[strlen(ref.cusName) + 1];
+	strcpy(cusName, ref.cusName);
+	return *this;
+}
+
 void Account::Deposit(int money) {
 	balance += money;
 }

@@ -2,10 +2,11 @@
 #define __ACCOUNT_HANDLER_H__
 
 #include "Account.h"
+#include "AccontArray.h"
 
 class AccountHandler {
 private:
-	Account *accArr[100];
+	BoundCheckAccounPtrArray accArr;
 	int accNum;
 protected:
 	void MakeNormalAccount(void);
