@@ -5,32 +5,32 @@ int main(void)
 {
 	AccountHandler manager;
 	int choice;
-
-	while (1)
+	
+	while(1)
 	{
 		manager.ShowMenu();
-		cout << "선택: ";
-		cin >> choice;
-		cout << endl;
-
-		switch (choice)
+		cout<<"선택: "; 
+		cin>>choice;
+		cout<<endl;
+		
+		switch(choice)
 		{
 		case MAKE:
-			manager.MakeAccount();
+			manager.MakeAccount(); 
 			break;
 		case DEPOSIT:
-			manager.DepositMoney();
+			manager.DepositMoney(); 
 			break;
-		case WITHDRAW:
-			manager.WithdrawMoney();
+		case WITHDRAW: 
+			manager.WithdrawMoney(); 
 			break;
 		case INQUIRE:
-			manager.ShowAllAccInfo();
+			manager.ShowAllAccInfo(); 
 			break;
 		case EXIT:
 			return 0;
 		default:
-			cout << "Illegal selection.." << endl;
+			cout<<"Illegal selection.."<<endl;
 		}
 	}
 	return 0;
