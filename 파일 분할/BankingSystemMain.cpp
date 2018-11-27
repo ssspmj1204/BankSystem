@@ -1,12 +1,13 @@
 #include "BankingCommonDecl.h"
 #include "AccountHandler.h"
 
-int main() {
-
+int main(void)
+{
 	AccountHandler manager;
 	int choice;
 
-	while (1) {
+	while (1)
+	{
 		manager.ShowMenu();
 		cout << "¼±ÅÃ: ";
 		cin >> choice;
@@ -29,7 +30,7 @@ int main() {
 		case EXIT:
 			return 0;
 		default:
-			cout << "Illegal selection" << endl;
+			cout << "Illegal selection.." << endl;
 		}
 	}
 	return 0;
